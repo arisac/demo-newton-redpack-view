@@ -1,0 +1,57 @@
+{
+  "redPacket": [
+    {
+      "language": "zh",
+      "isNewton": false,
+      "isExpired": false,
+      "isShareable": false,
+      "isCode": true,
+      "displayUnclaim": true,
+      "displayRefunded": true,
+      "assetName": "Miaocai",
+      "assetSymbol": "MCT",
+      "assetAddress": "0x483246B0Ae0B14DB4C4597C7CC4af2e2ea440a55",
+      "amount": "123,456,789.0023",
+      "type": "0", 
+      "typeDescription": "note: 0=identical, 1=random", 
+      "transferred": true,
+      "from": "NEW182···123456",
+      "message": "Good Luck!",
+      "totalNum": "10",
+      "openedNum": "3",
+      "totalAmount": "1000",
+      "openedAmount": "100",
+      "time": "18"
+    }
+  ],
+  "items": [
+    {
+      "id": 1,
+      "name": "NEW182····123456",
+      "amount": "1,200",
+      "time": "2020-05-22 17:05:57",
+      "lucky": true
+    },
+    {
+      "id": 2,
+      "name": "NEW182····123456",
+      "amount": "1,200",
+      "time": "2020-05-22 17:05:57",
+      "lucky": false
+    },
+    {
+      "id": 3,
+      "name": "NEW182····123456",
+      "amount": "1,200",
+      "time": "2020-05-22 17:05:57",
+      "lucky": false
+    },
+    {
+      "id": 4,
+      "name": "NEW182····123456",
+      "amount": "1,200",
+      "time": "2020-05-22 17:05:57",
+      "lucky": false
+    }
+  ]
+}

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, 
+    user-scalable=0">
+    <meta name = "format-detection" content = "telephone=no">
+    <title>Red Packet View</title>
+    <script type="text/javascript" src="./jquery.1.6.2.min.js"> </script>
+
+    <link rel="stylesheet" media="all" href="./style.css" />
+  </head>
+  <body>
+    <div id="redpacket">
+      <div id="footer" ><img src="./footer.png"></div>
+      <div id="footer-bg" ><img src="./footer.png"></div>
+      <div id="redpacket-details" class="">
+        <section id="header">
+            <img class="icon" src="./ic_placeholder_token.png" alt="">
+            <h3>Asset Name</h3>
+            <span class="type">type</span>
+            <h4>###,###,###.#### SYMBOL</h4>
+            <span class="t">transfer status text</span>
+            <span class="f"><span class="1">from</span> <span class="2">address text</span></span>
+            <span class="c">message text</span>
+        </section>
+
+        <ul id="notices">
+        </ul>
+
+        <ul id="lists">
+        </ul>
+  
+      </div>
+    </div>
+
+
+
+    <script>
+      $(function(redPacketDetailsView) {
+        $.getJSON('example.json', function(data) {
+      
+          // Red Packet Gobal
+          $.each(data.redPacket, function(i) {
+            // Set Language Namespaces
+            language = "en";
+            language = this.language;
+            gs(language);
+            // if Newton Asset
+            if(this.isNewton) {
+              assetName = "Newton";
+              assetSymbol = "NEW";
+              assetAddress = "";
+              assetIcon = "./ic_placeholder_newton.png";
+              $("img.icon").attr("src", assetIcon);
+            } else {
+              assetName = this.assetName;
+              assetSymbol = this.assetSymbol;
+              assetAddress = this.assetAddress;
+              assetIcon = "https://misc.newswap.org/tokenlist/assets/1012/" + assetAddress + "/logo.png";
+              UrlExists(assetIcon, function(status){
+                  if(status === 200){
+                    //ok
+                  } else if(status === 404){
+                    assetIcon = "./ic_placeholder_token.png";
+                  }
+                  $("img.icon").attr("src", assetIcon);
+              });
+            }
+
+            $( "#header h3" ).html( assetName );
+            $( "#header h4" ).html( this.amount + " " + assetSymbol );
+            $( "#header h4" ).html( this.amount + " " + assetSymbol );
+            $( "#header .f .1" ).html( gs.from );
+            $( "#header .f .2" ).html( this.from );
+            if(this.message === "") {
+              $( "#header .c" ).replaceWith( null );
+            } else {
+              $( "#header .c" ).replaceWith( "<span class='c'>" + this.message + "</span>" );
+            }
+            if(this.transferred) {
+              $( "#header .t" ).html( gs.transferredToWallet );
+            } else {
+              $( "#header .t" ).replaceWith( null );
+            }
+
+            // Red Packet Type
+            if(this.isCode) {
+              var codeText = " / " + gs.typeCode;
+            } else {
+              var codeText = "";
+            }
+            if(this.type === 0) {
+              var typeText = gs.typeIdentical;
+            } else {
+              var typeText = gs.typeIdentical;
+            }
+            typeText += codeText;
+            $( "#header span.type" ).html( typeText );
+
+            // Display Unclaim Notice?
+            if(this.displayUnclaim) {
+              var unclaimText = 
+              "<li><span>" + gs.unclaimText + "</span></li>";
+              $(unclaimText).appendTo("ul#notices");
+            } 
+            // Display Refunded Notice?
+            if(this.displayRefunded) {
+              var refundedText = 
+              "<li><span>" + gs.refundedText + "</span></li>";
+              $(refundedText).appendTo("ul#notices");
+            } 
+
+            // Notice: Opened
+            var timeText = ""
+            if(this.time === ""){
+              // no time
+            } else {
+              timeText = gs.in + this.time + gs.seconds;
+            }
+            var noticeOpened = 
+              "<li>" + 
+                "<span>" + 
+                  this.openedNum + "/" + this.totalNum + gs.noticeOpened + 
+                  timeText + ", " +
+                  gs.noticeAmount + this.openedAmount + "/" + this.totalAmount + " " + assetSymbol + 
+                "</span>" +
+              "</li>";
+            $(noticeOpened).appendTo("ul#notices");
+          });
+  
+          // Red Packet Notice
+          // $.each(data.notices, function(i) {
+          //   var noticeData = 
+          //     "<li>" + 
+          //       "<span>" + this.content + "</span>" +
+          //     "</li>";
+          //   $(noticeData).appendTo("ul#notices");
+          // });
+  
+          // Red Packet List Items
+          $.each(data.items, function(i) {
+            if(this.lucky) {
+              var lucky = "<span class='d'>" + gs.bestLuck + "</span>";
+            } else {
+              var lucky = "";
+            }
+            var listData = 
+              "<li>" + 
+                "<span class='a'>" + this.name + "</span>" +
+                "<span class='b'>" + this.amount + " " + assetSymbol + "</span>" + 
+                "<span class='c'>" + this.time + "</span>" + 
+                lucky +
+              "</li>";
+            $(listData).appendTo("ul#lists");
+            
+          });
+          var listLast = "<li><span class='no-more'>" + gs.noMore + "</span></li>"
+            $(listLast).appendTo("ul#lists");
+
+          // i18n: en & zh
+          function gs(lang){
+            if(lang === "en"){
+              gs.from = "From ";
+              gs.bestLuck = "Best Luck";
+              gs.noMore = "no more data";
+              gs.typeCode = "Code";
+              gs.typeRandom = "Random";
+              gs.typeIdentical = "Identical";
+              gs.transferredToWallet = "Transfered to your wallet";
+              gs.noticeOpened = " Red Packet(s) opened";
+              gs.noticeAmount = "amount: ";
+              gs.unclaimText = "Unclaimed Amount will be retured in 24 hours";
+              gs.refundedText = "Unclaimed Amount has refunded to your account";
+              gs.seconds = " seconds";
+              gs.in = " in ";
+            } else if(lang === "zh"){
+              gs.from = "来自";
+              gs.bestLuck = "最佳手气";
+              gs.noMore = "没有更多信息";
+              gs.typeCode = "密码";
+              gs.typeRandom = "拼手气";
+              gs.typeIdentical = "普通红包";
+              gs.transferredToWallet = "已转到你的钱包";
+              gs.noticeOpened = "个红包已打开";
+              gs.noticeAmount = "数额: ";
+              gs.unclaimText = "未领取数额将于24小时后返回";
+              gs.refundedText = "未领取数额已退回至你的账户";
+              gs.seconds = "秒";
+              gs.in = "用时";
+            } 
+          }
+
+        });
+      });
+
+      function UrlExists(url, cb){
+        jQuery.ajax({
+          url:      url,
+          dataType: 'text',
+          type:     'GET',
+          complete:  function(xhr){
+              if(typeof cb === 'function')
+                  cb.apply(this, [xhr.status]);
+          }
+        });
+      }
+
+      window.onload = function() {
+        $("#redpacket-details").addClass("bounce");
+      };
+    </script>
+   
+
+  </body>
+</html>

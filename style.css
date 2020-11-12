@@ -1,0 +1,220 @@
+:root {
+  --bg: #ffffff;
+  --bg-redpacket: #E25D4E;
+  --card-bg-start: #FFD2A0; 
+  --card-bg-end: #FFD2A0;
+  --primary: #A96223;
+  --secondary: #777777;
+  --seperator: #F5F7FB;
+  --text: #131313;
+}
+body {
+  color: var(--bg);
+  word-wrap:break-word;
+  margin:0;
+  padding:0;
+  overflow: hidden; 
+  font-family: Roboto, Avenir, "Avenir Next", Helvetica, sans-serif;
+
+}
+::-webkit-scrollbar {
+  display: none;
+}
+#redpacket {
+  overflow-y: scroll;
+  height: 100vh;
+}
+
+#footer {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  z-index: 100;
+}
+#footer img {
+  width: 100%;
+}
+
+#footer-bg {
+  position: fixed;
+  width: 100%;
+  background: var(--bg-redpacket);
+  border-radius: 20px;
+  left: 0;
+  right: 0;
+  bottom:0;
+  padding-top: 100px;
+  z-index: 10;
+}
+#footer-bg img {
+  width: 100%;
+  opacity: 0;
+}
+
+#redpacket, #footer, #footer-bg {
+  max-width: 500px;
+  min-width: 300px;
+  margin: auto;
+}
+
+
+div[id^='redpacket-'] {
+  position:relative;
+  z-index: 50;
+  top: 0;
+  margin: 18px;
+  margin-bottom: 100px;
+  border-radius:18px;
+  background:var(--bg);
+  box-shadow:0px 0px 20px 0px rgba(0,0,0,0.25);
+  font-size: 13px;
+  line-height:16px;
+  color: var(--text);
+  padding: 8px;
+  top:100vh;
+}
+
+div[id^='redpacket-'] section {
+  padding: 8px 8px 0 8px;
+  border-radius:10px;
+}
+
+#header {
+  padding: 8px !important;
+  background: linear-gradient(360deg, var(--card-bg-start) 0%, var(--card-bg-end) 100%);
+  color: var(--primary);
+}
+#header .icon {
+  float: left;
+  width:32px;
+  height:32px;
+  border-radius:16px;
+  position: relative;
+}
+#header h3 {
+  display: inline;
+  float: left;
+  font-size: 15px;
+  line-height: 32px;
+  height: 32px;
+  padding-left: 8px;
+  margin: 0;
+  font-weight: 500;
+}
+#header .type {
+  display: inline;
+  float: right;
+  font-size: 12px;
+  margin: 0;
+  color: var(--primary);
+}
+
+#header h4 {
+  display: block;
+  clear: both;
+  padding: 0; margin: 0;
+  padding-top: 16px;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: normal;
+}
+#header .t, #header .f, #header .c {
+  display: block;
+}
+#header .t {
+  font-size: 11px;
+  line-height: 16px;
+}
+#header .f {
+  margin-top: 16px;
+  font-size: 11px;
+  line-height: 16px;
+}
+#header .c {
+  font-size: 15px;
+  line-height: 24px;
+}
+#header .c {
+  font-size: 15px;
+  line-height: 24px;
+}
+#header .c::before {
+  content: "“";
+}
+#header .c::after {
+  content: "”";
+}
+
+#notices {
+  list-style: none;
+  padding: 0 8px;
+  margin: 0;
+}
+#notices li {
+  font-size: 12px;
+  color: var(--secondary);
+  padding: 8px 0;
+}
+
+#notices li:last-child {
+  border-bottom: var(--seperator) solid 1px;
+}
+
+#lists {
+  list-style: none;
+  padding: 0 8px;
+  margin: 0;  
+  padding-bottom: 150px;
+}
+
+#lists li {
+  padding-top: 8px;
+  display: block;
+  height: 48px;
+}
+#lists li .a, #lists li .c {
+  float: left;
+}
+#lists li .b, #lists li .d {
+  float: right;
+}
+#lists li .c {
+  clear: both;
+}
+#lists li .a {
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--text);
+}
+#lists li .b {
+  font-size: 13px;
+  line-height: 24px;
+  color: var(--text);
+}
+#lists li .c {
+  font-size: 12px;
+  line-height: 24px;
+  color: var(--secondary);
+}
+#lists li .d {
+  font-size: 12px;
+  line-height: 24px;
+  color: var(--primary);
+}
+
+#lists .no-more {
+  text-align: center;
+  display: block;
+  height: 32px;
+  color: var(--secondary);
+}
+.bounce {
+  animation: bounce 0.8s forwards
+}
+@keyframes bounce {
+  0%   { top:100vh; transform: scale(1); }
+  60%  { top:-5vh; transform: scale(1.05); }
+  100%  { top:0; transform: scale(1); }
+}
